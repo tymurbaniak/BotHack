@@ -22,16 +22,25 @@
 (defn- logged-in? [frame]
   (some #(.contains % "Logged in as") (:lines frame)))
 
+(defn- character-prompt? [frame]
+  (some #(.contains % "Shall I pick character") (:lines frame)))
+
 (defn init [{:keys [delegator config] :as bh}]
-  (let [logged-in (reify RedrawHandler
+  (let [character-prompt (reify RedrawHandler
                     (redraw [this frame]
-                      (when (menu-drawn? frame)
+                      (when (character-prompt? frame)
                         (deregister-handler bh this)
+                        (log/info "Picking race")
+                        (send delegator started)
+                        (send delegator write "y")))) ; play!
+        logged-in (reify RedrawHandler
+                    (redraw [this frame]
+                      (when (menu-drawn? frame)                        
                         (if-not (logged-in? frame)
                           (throw (IllegalStateException. "Failed to login")))
-                        (log/info "DGL menubot finished")
-                        (send delegator started)
-                        (send delegator write (config-get config :dgl-game))))) ; play!
+                        (log/info "Logged in")
+                        (send delegator write "pp")
+                        (replace-handler bh this character-prompt))))
         pass-prompt (reify RedrawHandler
                       (redraw [this frame]
                         (when (user-prompt? frame)
