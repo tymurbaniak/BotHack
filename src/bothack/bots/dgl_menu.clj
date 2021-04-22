@@ -30,7 +30,8 @@
                     (redraw [this frame]
                         (deregister-handler bh this)
                         (log/info "Starting game")
-                        (send delegator started))) ; play!
+                        (send delegator started)
+                        (send delegator write (config-get config :dgl-game)))) ; play!
         gibberish-prompt (reify RedrawHandler
                     (redraw [this frame]
                       (log/info "Frame with some libraries, trying to pick race")
