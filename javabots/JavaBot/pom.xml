@@ -7,18 +7,18 @@
   <version>0.1.0-SNAPSHOT</version>
   <name>JavaBot</name>
   <description>BotHack Java bot example</description>
-  <url>https://github.com/krajj7/BotHack</url>
+  <url>https://github.com/tymurbaniak/BotHack</url>
   <licenses>
     <license>
       <name>GPLv2</name>
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git://github.com/krajj7/BotHack.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/krajj7/BotHack.git</developerConnection>
+    <connection>scm:git:git://github.com/tymurbaniak/BotHack.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/tymurbaniak/BotHack.git</developerConnection>
     <tag>37573f63356267a59d0b7ae2ce4b0576ed92e408
 </tag>
-    <url>https://github.com/krajj7/BotHack</url>
+    <url>https://github.com/tymurbaniak/BotHack</url>
   </scm>
   <build>
     <sourceDirectory>src</sourceDirectory>
