@@ -27,14 +27,13 @@
 
 (defn init [{:keys [delegator config] :as bh}]
   (let [character-prompt (reify RedrawHandler                    
-                    (redraw [this frame]                                            
-                      (when (character-prompt? frame)
+                    (redraw [this frame]
                         (deregister-handler bh this)
-                        (log/info "Picking race")
-                        (send delegator started)))) ; play!
+                        (log/info "Starting game")
+                        (send delegator started))) ; play!
         gibberish-prompt (reify RedrawHandler
                     (redraw [this frame]
-                      (log/info "Frame with some libraries")
+                      (log/info "Frame with some libraries, trying to pick race")
                       (send delegator write "y") ; we can try it here why not
                       (replace-handler bh this character-prompt)))
         logged-in (reify RedrawHandler
