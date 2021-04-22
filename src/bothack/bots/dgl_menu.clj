@@ -31,8 +31,7 @@
                       (when (character-prompt? frame)
                         (deregister-handler bh this)
                         (log/info "Picking race")
-                        (send delegator started)
-                        (send delegator write "y")))) ; play!
+                        (send delegator started)))) ; play!
         gibberish-prompt (reify RedrawHandler
                     (redraw [this frame]
                       (log/info "Frame with some libraries")
