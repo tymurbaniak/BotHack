@@ -26,13 +26,18 @@
   (some #(.contains % "Shall I pick character") (:lines frame)))
 
 (defn init [{:keys [delegator config] :as bh}]
-  (let [character-prompt (reify RedrawHandler
-                    (redraw [this frame]
+  (let [character-prompt (reify RedrawHandler                    
+                    (redraw [this frame]                                            
                       (when (character-prompt? frame)
                         (deregister-handler bh this)
                         (log/info "Picking race")
                         (send delegator started)
                         (send delegator write "y")))) ; play!
+        gibberish-prompt (reify RedrawHandler
+                    (redraw [this frame]
+                      (log/info "Frame with some libraries")
+                      (send delegator write "y") ; we can try it here why not
+                      (replace-handler bh this character-prompt)))
         logged-in (reify RedrawHandler
                     (redraw [this frame]
                       (when (menu-drawn? frame)                        
@@ -40,7 +45,7 @@
                           (throw (IllegalStateException. "Failed to login")))
                         (log/info "Logged in")
                         (send delegator write "pp")
-                        (replace-handler bh this character-prompt))))
+                        (replace-handler bh this gibberish-prompt))))
         pass-prompt (reify RedrawHandler
                       (redraw [this frame]
                         (when (user-prompt? frame)
